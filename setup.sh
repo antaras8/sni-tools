@@ -49,6 +49,9 @@ sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 
 # === Выпуск сертификата ===
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --nginx --non-interactive --agree-tos -m admin@$DOMAIN -d $DOMAIN
 
 # === Перезапуск для надёжности ===
