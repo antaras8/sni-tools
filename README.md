@@ -22,3 +22,8 @@ curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/con
 ```curl
 sudo sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*.conf && sudo systemctl restart ssh
 ```
+
+### Отключить ipV6 ubuntu
+```curl
+echo -e "net.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 = 1\nnet.ipv6.conf.lo.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
