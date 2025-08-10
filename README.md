@@ -17,3 +17,8 @@ curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/ins
 ```curl
 curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/configure_ufw.sh | bash -s backend_ip
 ```
+
+### Запрет на авторизацию SSH через пароль
+```curl
+sudo sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*.conf && sudo systemctl restart ssh
+```
