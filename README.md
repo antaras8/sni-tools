@@ -27,3 +27,8 @@ sudo sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/ss
 ```curl
 echo -e "net.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 = 1\nnet.ipv6.conf.lo.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ```
+
+### проверка пропускного канала VPS с РФ
+```curl
+curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/vless_capacity.sh |   bash -s -- iperf -h spd-rudp.hostkey.ru -p 5201 -P 10 --ipv4
+```
