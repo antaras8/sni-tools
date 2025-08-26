@@ -92,7 +92,7 @@ case "$MODE" in
       elif command -v yum >/dev/null 2>&1; then
         sudo yum install -y iperf3
       else
-        echo "Неизвестный дистрибутив: установи iperf3 вручную."
+        echo "Не удалось определить пакетный менеджер, установи iperf3 вручную."
         exit 3
       fi
     fi
