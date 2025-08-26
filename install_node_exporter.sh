@@ -29,7 +29,7 @@ services:
       - '--collector.cpu'
       - '--collector.meminfo'
       - '--collector.netdev'
-      - '--collector.netdev.device-include=^eth0$'
+      - '--collector.netdev.device-exclude=^(lo|veth.*|docker.*|br-.*|tun.*|tap.*|wg.*|ifb.*)$'
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--path.rootfs=/rootfs'
