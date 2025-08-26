@@ -83,9 +83,21 @@ case "$MODE" in
       esac
     done
     [ -z "${HOST}" ] && { echo "Error: --host required for iperf mode"; exit 2; }
-    command -v iperf3 >/dev/null 2>&1 || { echo "Error: iperf3 not found"; exit 3; }
 
-    # Запуск iperf3 (клиент), собираем суммарную скорость receiver.
+    # Проверяем наличие iperf3 и устанавливаем при необходимости
+    if ! command -v iperf3 >/dev/null 2>&1; then
+      echo "iperf3 not found. Installing..."
+      if command -v apt-get >/dev/null 2>&1; then
+        sudo apt-get update -y && sudo apt-get install -y iperf3
+      elif command -v yum >/dev/null 2>&1; then
+        sudo yum install -y iperf3
+      else
+        echo "Неизвестный дистрибутив: установи iperf3 вручную."
+        exit 3
+      fi
+    fi
+
+    # Запуск iperf3 (клиент)
     OUT=$(iperf3 -c "$HOST" -p "$IPERF_PORT" -P "$IPERF_PARALLEL" -t "$IPERF_TIME" $IPVER_FLAG 2>/dev/null || true)
 
     # Парсим строку [SUM] ... receiver
