@@ -37,3 +37,29 @@ echo -e "net.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 
 ```curl
 curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/vless_capacity.sh |   bash -s -- iperf -h spd-rudp.hostkey.ru -p 5201 -P 10 --ipv4
 ```
+
+### Проверка IP сервера на блокировку зарубежными сервисами и чистоту IP:
+```curl
+bash <(curl -Ls IP.Check.Place | sed '/^\s*show_ad\s*$/d') -l en
+```
+### Проверка скорости к российским провайдерам:
+```curl
+wget -qO- bench.openode.xyz | bash
+```
+### Параметры сервера и проверка скорости к зарубежным провайдерам:
+```curl
+wget -qO- bench.sh | bash
+```
+### Гео тест IP (IP Region), проверка региона ютуба и т.д. :
+```curl
+bash <(wget -qO- https://github.com/Davoyan/ipregion/raw/main/ipregion.sh)
+```
+### Yabs:
+```curl
+curl -sL yabs.sh | bash -s -- -4
+```
+### Тест на процессор, можно понять примерно какой процент CPU выделен:
+# В threads писать количество ядер процессора
+```curl
+sysbench cpu run --threads=1
+```
