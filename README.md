@@ -46,6 +46,10 @@ bash <(curl -Ls IP.Check.Place | sed '/^\s*show_ad\s*$/d') -l en
 ```curl
 wget -qO- bench.openode.xyz | bash
 ```
+### Проверка ип на страны
+```curl
+bash <(curl -L -s https://bench.gig.ovh/ipregion.sh) -g primary
+```
 ### Параметры сервера и проверка скорости к зарубежным провайдерам:
 ```curl
 wget -qO- bench.sh | bash
