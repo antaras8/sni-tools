@@ -24,8 +24,14 @@ curl -s https://raw.githubusercontent.com/antaras8/sni-tools/refs/heads/main/con
 ```
 
 ### Запрет на авторизацию SSH через пароль
+Ububtu
 ```curl
 sudo sed -i 's/^PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config /etc/ssh/sshd_config.d/*.conf && sudo systemctl restart ssh
+```
+
+Debian
+```
+sh -c 'sed -i "s/^#\?PasswordAuthentication.*/PasswordAuthentication no/" /etc/ssh/sshd_config; for f in /etc/ssh/sshd_config.d/*.conf; do [ -f "$f" ] && sed -i "s/^#\?PasswordAuthentication.*/PasswordAuthentication no/" "$f"; done; systemctl restart sshd'
 ```
 
 ### Отключить ipV6 ubuntu
