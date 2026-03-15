@@ -12,32 +12,45 @@
 
 ---
 
+## Создание директории
+
+```bash
+mkdir -p /opt/caddy && cd /opt/caddy
+```
+
+---
+
 ## .env
 
-```env
+```bash
+cat > .env << 'EOF'
 CF_API_TOKEN=твой_токен_cloudflare
 DOMAIN=cdn-video.world
 SUBDOMAIN=moscow
+EOF
 ```
 
 ---
 
 ## Dockerfile
 
-```dockerfile
+```bash
+cat > Dockerfile << 'EOF'
 FROM caddy:2-builder AS builder
 RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
 
 FROM caddy:2
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+EOF
 ```
 
 ---
 
 ## Caddyfile
 
-```caddy
+```bash
+cat > Caddyfile << 'EOF'
 {
     email admin@{env.DOMAIN}
 }
@@ -49,13 +62,15 @@ COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
     respond "Not Found" 404
 }
+EOF
 ```
 
 ---
 
 ## docker-compose.yml
 
-```yaml
+```bash
+cat > docker-compose.yml << 'EOF'
 services:
   caddy:
     build: .
@@ -75,6 +90,7 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+EOF
 ```
 
 ---
@@ -82,9 +98,29 @@ volumes:
 ## Запуск
 
 ```bash
-cd /opt/caddy
-docker compose up -d
+# Сборка образа и запуск
+docker compose up -d --build
+
+# Логи в реальном времени
 docker compose logs -f caddy
 ```
 
 Caddy сам получит сертификат через Cloudflare DNS и будет автоматически обновлять его.
+
+---
+
+## Полезные команды
+
+```bash
+# Перезагрузить конфиг без перезапуска контейнера
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+
+# Проверить статус сертификата
+docker exec caddy caddy environ | grep DOMAIN
+
+# Остановить
+docker compose down
+
+# Посмотреть сохранённые сертификаты
+docker exec caddy ls /data/caddy/certificates/
+```
