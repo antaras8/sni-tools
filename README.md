@@ -73,3 +73,7 @@ curl -sL yabs.sh | bash -s -- -4
 ```curl
 sysbench cpu run --threads=1
 ```
+
+```curl
+wget -qO- censorcheck.tlab.pw | bash
+```
